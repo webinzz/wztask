@@ -1,0 +1,1 @@
+<button {{ $attributes }} class="bg-slate-700 p-2 px-4 rounded-sm text-white hover:opacity-80">{{ $slot }}</button>
