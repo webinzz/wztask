@@ -31,7 +31,7 @@
                 <div class="flex ">
                     <form action="{{ url('goals') }}" class="max-w-md mx-auto" method="GET">
                         <label for="default-search"
-                            class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                            class="mb-2 text-sm font-medium text-slate-700 sr-only dark:text-white">Search</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
@@ -41,7 +41,7 @@
                                 </svg>
                             </div>
                             <input value="{{ request('search') }}" name="search" type="search" id="default-search"
-                                class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg rounded-e-none bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                class="block w-full p-3 ps-10 text-sm text-slate-700 border border-gray-300 rounded-lg rounded-e-none bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Search Title, Descrip..." />
                         </div>
                     </form>
@@ -101,8 +101,9 @@
             </header>
 
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
-                <x-goal></x-goal>
-                @foreach ($data as $goals)
+                @foreach ($data as $goal)
+                <x-goal :data="$goal"></x-goal>
+
                 @endforeach
             </div>
 
@@ -114,45 +115,95 @@
 </x-layout>
 
 {{-- create --}}
-<x-modal idmodal="create" width="0px" title="create new goals">
-    <form action="" method="post" class="flex gap-2 p-4 md:p-5">
-        @csrf
+<x-modal idmodal="create">
+    <div class="relative w-[50rem] bg-white rounded-lg shadow dark:bg-gray-700 -translate-y-4 pb-4">
 
-        <div class="flex items-center justify-center w-60">
-            <label for="dropzone-file"
-                class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                    <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
-                    </svg>
-                    <p class="mb-2 text-sm text-center text-gray-500 dark:text-gray-400 p-4"><span
-                            class="font-semibold">Click to upload</span> or drag and drop</p>
+        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+            <h3 class="text-xl font-semibold text-slate-700 dark:text-white">
+                Create New Goal
+            </h3>
+            <button type="button"
+                class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-slate-700 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                data-modal-hide="create">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+        </div>
+        <form method="post" class="flex gap-4 p-4 md:p-5 justify-between" enctype="multipart/form-data">
+            @csrf
+            <div class="flex items-center justify-center w-1/2">
+                <label for="dropzone-file"
+                    class="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                        </svg>
+                        <p class="mb-2 text-sm text-center text-gray-500 dark:text-gray-400 p-4"><span
+                                class="font-semibold">Click to upload</span> or drag and drop</p>
+                    </div>
+                    <input name="image" id="dropzone-file" type="file" class="hidden" />
+                </label>
+            </div>
+
+            <div class=" flex flex-col w-2/3 gap-5 px-5">                
+                <div>
+                    <label for="target_value" class="block mb-1 text-sm font-medium text-slate-700 dark:text-white">Target Value :</label>
+                    <x-input 
+                        name="target_value" 
+                        type="number" 
+                        min="0" 
+                        class="block w-full border-slate-400 rounded-lg focus:border-slate-500 text-slate-500 focus:ring-slate-700"
+                    ></x-input>
                 </div>
-                <input id="dropzone-file" type="file" class="hidden" />
-            </label>
-        </div>
+                
+                <div>
+                    <label for="current_value" class="block mb-1 text-sm font-medium text-slate-700 dark:text-white">Current Value :</label>
+                    <x-input 
+                        name="current_value" 
+                        type="text" 
+                        min="0" 
+                        value="nothing yet" 
+                        class="block w-full border-slate-400 rounded-lg focus:border-slate-500 text-slate-500 focus:ring-slate-700"
+                    ></x-input>
+                </div>
+                
+                <div>
+                    <label for="current_persen" class="block mb-1 text-sm font-medium text-slate-700 dark:text-white">Current Persen :</label>
+                    <x-input 
+                        name="current_persen" 
+                        type="number" 
+                        min="0" 
+                        value="0" 
+                        class="block w-full border-slate-400 rounded-lg focus:border-slate-500 text-slate-500 focus:ring-slate-700"
+                    ></x-input>
+                </div>
+                
+                
+                
+                <div>
+                    <label for="timeline" class="block mb-1 text-sm font-medium text-slate-700 dark:text-white">Timeline :</label>
+                    <select name="timeline" id="timeline" class="block w-full bg-gray-50 border border-gray-300 text-slate-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="day">day</option>
+                        <option value="week">week</option>
+                        <option value="month">month</option>
+                        <option value="year">year</option>
+                    </select>
+                </div>
+                
 
-        <div class=" flex flex-col ">
-            <div>
-                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">add
-                    title</label>
-                <x-input name="input"></x-input>
+ 
+                
+                <x-button class="p-3 rounded-xl" type="submit">Create goals</x-button>
             </div>
-
-            <div>
-              <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">add smart</label>
-                <x-input name="input"></x-input>
-            </div>
-            
-            <div>
-              <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">add time</label>
-                <x-input name="input"></x-input>
-            </div>
-            <x-button type="submit">Create goals</x-button>
-        </div>
-    </form>
+        </form>
+    </div>
 
 
 </x-modal>

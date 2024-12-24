@@ -40,8 +40,20 @@ class GoalController extends Controller
      */
     public function store(Request $request)
     {
-        $datainput = $request->all();
-        goal::create($datainput);
+    
+        // Upload gambar jika ada
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('uploads', 'public');
+        }
+
+        Goal::create([
+            'target_value' => $request->target_value,
+            'current_value' => $request->current_value,
+            'current_persen' => $request->current_persen,
+            'timeline' => $request->timeline,
+            'image' => $imagePath ?? 'default.png', // gunakan path gambar atau default
+        ]);
 
         return back()->with("created", "1");
 
@@ -68,19 +80,7 @@ class GoalController extends Controller
      */
     public function update(Request $request, String $id)
     {
-        $datainput = $request->validate(
-            [
-                'title' => 'required|string|max:255',
-                'description' => 'required|string',
-                'status' => 'required',
-            ]
-        );
-        goal::where('id', $id)->update([
-            'title' => $datainput['title'],
-            'description' => $datainput['description'],
-            'status' => $datainput['status'],
-        ]   );
-        return back()->with("updated", "1");
+
     }
 
     /**
@@ -88,7 +88,6 @@ class GoalController extends Controller
      */
     public function destroy(String $id)
     {
-        goal::find($id)->delete();
-        return back()->with("deleted", "1");
+
     }
 }
