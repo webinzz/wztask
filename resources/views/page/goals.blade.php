@@ -19,8 +19,14 @@
             @endif
 
 
-            <button data-modal-target="create" data-modal-toggle="create"
-                class="fixed right-10 z-30 bottom-10 rounded-full w-16 h-16  text-xl bg-slate-800 text-white hover:scale-105">+</button>
+            <div class=" fixed right-10 z-30 bottom-10 flex flex-col justify-center items-center gap-2">
+                {{-- <div class="w-6 h-6 relative rounded-full bg-blue-400 group">
+                    <p class="px-4 absolute -left-16 hidden group-hover:block shadow-lg text-sm bg-blue-200">week</p>
+                </div> --}}
+                <button data-modal-target="create" data-modal-toggle="create"
+                class=" rounded-full w-16 h-16  text-xl bg-slate-800 text-white hover:scale-105">+</button>
+            </div>
+           
 
             <!-- Header -->
             <header class="col-span-3 lg:col-span-4 h-10 flex   md:flex-row flex-col md:justify-between  items-center md:mb-6 mb-16">

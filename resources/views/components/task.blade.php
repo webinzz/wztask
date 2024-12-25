@@ -2,23 +2,24 @@
 
 
 <div
-    class="relative col-span-1  shadow-sm p-5 rounded-lg min-h-72 flex justify-between flex-col overflow-hidden
-{{ $task->status == 'normal' ? 'bg-green-300' : ($task->status == 'urgent' ? 'bg-red-400' : ($task->status == 'important' ? 'bg-yellow-300' : 'bg-blue-200')) }}
+    class="relative col-span-1 hover:scale-105 transition-all duration-300  shadow-sm p-5 bg-gradient-to-br rounded-lg min-h-72 flex justify-between flex-col overflow-hidden
+{{ $task->status == 'normal' ? 'from-green-300 to-blue-500' : ($task->status == 'urgent' ? 'from-pink-400 to-red-600' : ($task->status == 'important' ? 'from-yellow-300 to-orange-500' : 'bg-blue-400')) }}
 ">
-    <p class="text-lg text-slate-800">{{ $task->description }} </p>
+    <p class="text-lg text-white">{{ $task->description }} </p>
     <div class="flex justify-between items-center z-10">
 
-        <h4 class="font-extrabold text-xl text-slate-800">{{ $task->title }}</h4>
+        <h4 class="font-bold text-2xl text-white">{{ $task->title }}</h4>
 
         <button id="doubleDropdownButton" data-dropdown-toggle="doubleDropdown{{ $task->id }}"
             data-dropdown-placement="right-start" type="button"
-            class="bg-black opacity-75 w-10 h-10  rounded-full hover:scale-110">
-            <span class="material-symbols-outlined -translate-x-0 text-lg text-white  ">more_vert</span>
+            class="bg-white opacity-75 w-10 h-10  rounded-full hover:scale-110">
+            <span class="material-symbols-outlined -translate-x-0 text-lg text-slate-500  ">more_vert</span>
         </button>
     </div>
 
-    {{-- <div class="absolute w-40 h-40 blur-xl -left-2 rounded-full -bottom-4 bg-purple-100"></div> --}}
 </div>
+
+
 
 {{-- dropdown --}}
 <div id="doubleDropdown{{ $task->id }}"
