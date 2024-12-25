@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\goal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class GoalController extends Controller
 {
@@ -13,18 +14,24 @@ class GoalController extends Controller
     public function index()
     {
         if(request("search")){
-            $data = goal::where("title","like","%".request("search")."%")->orWhere("description", "like", "%".request("search")."%")->get();
+            $data = goal::where("target_value","like","%".request("search")."%")->orWhere("title", "like", "%".request("search")."%")->where("status", "!=","completed")->get();
             return view("page.goals", compact("data"));
         }else{
-            $data = goal::all();
+            $data = goal::where("status", "!=","completed")->get();
             return view("page.goals", compact("data"));
         }
     }
 
     public function find(string $status)
     {
-        $data = goal::where('status', $status)->get();
-        return view('page.goals', compact('data'));
+        if($status == "completed"){
+            $data = goal::where("status", "completed")->get();
+            return view('page.goals', compact('data'));
+        }else{
+            $data = goal::where('timeline', $status)->where("status", "!=","completed")->get();
+            return view('page.goals', compact('data'));
+        }
+        
     }
 
     /**
@@ -41,6 +48,7 @@ class GoalController extends Controller
     public function store(Request $request)
     {
     
+    
         // Upload gambar jika ada
         $imagePath = null;
         if ($request->hasFile('image')) {
@@ -49,6 +57,7 @@ class GoalController extends Controller
 
         Goal::create([
             'target_value' => $request->target_value,
+            'title' => $request->title,
             'current_value' => $request->current_value,
             'current_persen' => $request->current_persen,
             'timeline' => $request->timeline,
@@ -81,6 +90,34 @@ class GoalController extends Controller
     public function update(Request $request, String $id)
     {
 
+    
+        // Ambil data berdasarkan ID
+        $data = goal::find($id);
+    
+        // Update data
+        $data->title = $request['title'];
+        $data->target_value = $request['target_value'];
+        $data->current_value = $request['current_value'];
+        $data->current_persen = $request['current_persen'];
+        $data->timeline = $request['timeline'];
+        $data->status = $request['status'];
+    
+        // Cek jika ada file gambar yang diunggah
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            if ($data->image && Storage::disk('public')->exists($data->image)) {
+                Storage::disk('public')->delete($data->image);
+            }
+    
+            // Simpan gambar baru
+            $data->image = $request->file('image')->store('uploads', 'public');
+        }
+    
+        // Simpan perubahan
+        $data->save();
+        return back()->with("updated", 1);
+
+    
     }
 
     /**
@@ -88,6 +125,9 @@ class GoalController extends Controller
      */
     public function destroy(String $id)
     {
+        goal::find($id)->delete();
+
+        return back()->with("deleted", 1);
 
     }
 }

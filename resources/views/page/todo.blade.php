@@ -4,7 +4,7 @@
 
         <!-- Main Content -->
         <div
-            class="relative  bg-[rgba(255,2555,255,1)] w-full h-[95vh] me-5 my-5 rounded-xl items-start p-5 px-8 overflow-y-scroll">
+            class="relative  bg-[rgba(255,2555,255,1)] w-full h-[95vh] mx-5 my-5 rounded-xl items-start p-5 md:px-8  overflow-y-scroll">
 
             @if (session('created'))
                 <x-massage color="green" text="Succes created"></x-massage>
@@ -23,13 +23,13 @@
                 class="fixed right-10 z-20 bottom-10 rounded-full w-16 h-16  text-xl bg-slate-800 text-white hover:scale-105">+</button>
 
             <!-- Header -->
-            <header class="col-span-3 lg:col-span-4 h-10 flex flex-wrap justify-between items-center mb-6">
+            <header class="col-span-3 lg:col-span-4 h-10 flex md:flex-row flex-col md:justify-between  items-center md:mb-6 mb-16">
                 <div class="flex items-center gap-5">
-                    <h1 class="text-3xl font-bold text-slate-600">YOUR TASK</h1>
+                    <h1 class="text-3xl   font-bold text-slate-600">YOUR TASK</h1>
 
                 </div>
                 <div class="flex ">
-                    <form action="{{ url('task') }}" class="max-w-md mx-auto" method="GET">
+                    <form action="{{ url('task') }}" class="max-w-md  mx-auto" method="GET">
                         <label for="default-search"
                             class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                         <div class="relative">

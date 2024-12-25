@@ -4,7 +4,7 @@
 
         <!-- Main Content -->
         <div
-            class="relative  bg-[rgba(255,2555,255,1)] w-full h-[95vh] me-5 my-5 rounded-xl items-start p-5 px-8 overflow-y-scroll">
+            class="relative  bg-[rgba(255,2555,255,1)] w-full h-[95vh] mx-5 my-5 rounded-xl items-start p-5 md:px-8 overflow-y-scroll">
 
             @if (session('created'))
                 <x-massage color="green" text="Succes created"></x-massage>
@@ -20,10 +20,10 @@
 
 
             <button data-modal-target="create" data-modal-toggle="create"
-                class="fixed right-10 z-20 bottom-10 rounded-full w-16 h-16  text-xl bg-slate-800 text-white hover:scale-105">+</button>
+                class="fixed right-10 z-30 bottom-10 rounded-full w-16 h-16  text-xl bg-slate-800 text-white hover:scale-105">+</button>
 
             <!-- Header -->
-            <header class="col-span-3 lg:col-span-4 h-10 flex flex-wrap justify-between items-center mb-6">
+            <header class="col-span-3 lg:col-span-4 h-10 flex   md:flex-row flex-col md:justify-between  items-center md:mb-6 mb-16">
                 <div class="flex items-center gap-5">
                     <h1 class="text-3xl font-bold text-slate-600">YOUR GOALS</h1>
 
@@ -52,7 +52,7 @@
 
                     <!-- Dropdown menu -->
                     <div id="dropdown"
-                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                        class="z-30 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
 
                             <!-- all -->
@@ -63,37 +63,41 @@
                                 </a>
                             </li>
 
-                            <!-- Filter Urgent -->
                             <li>
-                                <a href="{{ url('goals/urgent') }}" type="submit" name="status" value="Urgent"
+                                <a href="{{ url('goals/day') }}" type="submit" name="status" value="Urgent"
                                     class="block w-full text-start px-4 py-2 hover:bg-red-100 dark:hover:bg-red-600 dark:hover:text-white">
-                                    Urgent
+                                    day
                                 </a>
                             </li>
 
-                            <!-- Filter Normal -->
                             <li>
-                                <a href="{{ url('goals/normal') }}" type="submit" name="status" value="Normal"
+                                <a href="{{ url('goals/week') }}" type="submit" name="status" value="Normal"
                                     class="block w-full text-start px-4 py-2 hover:bg-green-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                    Normal
+                                    week
                                 </a>
                             </li>
 
-                            <!-- Filter Important -->
                             <li>
-                                <a href="{{ url('goals/important') }}" type="submit" name="status" value="Important"
+                                <a href="{{ url('goals/month') }}" type="submit" name="status" value="Important"
                                     class="block w-full text-start px-4 py-2 hover:bg-yellow-100 dark:hover:bg-yellow-600 dark:hover:text-white">
-                                    Important
+                                    month
                                 </a>
                             </li>
 
-                            <!-- finish -->
                             <li>
-                                <a href="{{ url('goals/finish') }}" type="submit" name="status" value="Important"
+                                <a href="{{ url('goals/year') }}" type="submit" name="status" value="Important"
                                     class="block w-full text-start px-4 py-2 hover:bg-blue-100 dark:hover:bg-yellow-600 dark:hover:text-white">
-                                    finished
+                                    year
                                 </a>
                             </li>
+                            
+                            <li>
+                                <a href="{{ url('goals/completed') }}" type="submit" name="status" value="Important"
+                                    class="block w-full text-start px-4 py-2 hover:bg-blue-100 dark:hover:bg-yellow-600 dark:hover:text-white">
+                                    completed
+                                </a>
+                            </li>
+
                         </ul>
                     </div>
                 </div>
@@ -133,10 +137,10 @@
                 <span class="sr-only">Close modal</span>
             </button>
         </div>
-        <form method="post" class="flex gap-4 p-4 md:p-5 justify-between" enctype="multipart/form-data">
+        <form method="post" class="flex md:flex-row flex-col gap-4 p-4 md:p-5 justify-between" enctype="multipart/form-data">
             @csrf
-            <div class="flex items-center justify-center w-1/2">
-                <label for="dropzone-file"
+            <div class="flex items-center justify-center md:w-1/2">
+                <label for="dropzone-filee"
                     class="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                     <div class="flex flex-col items-center justify-center pt-5 pb-6">
                         <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
@@ -148,17 +152,25 @@
                         <p class="mb-2 text-sm text-center text-gray-500 dark:text-gray-400 p-4"><span
                                 class="font-semibold">Click to upload</span> or drag and drop</p>
                     </div>
-                    <input name="image" id="dropzone-file" type="file" class="hidden" />
+                    <input name="image" id="dropzone-filee" type="file" class="hidden" />
                 </label>
             </div>
 
-            <div class=" flex flex-col w-2/3 gap-5 px-5">                
+            <div class=" flex flex-col md:w-1/2 gap-3 px-5">                
+                <div>
+                    <label for="title" class="block mb-1 text-sm font-medium text-slate-700 dark:text-white">Title :</label>
+                    <x-input 
+                        name="title" 
+                        type="text" 
+                        class="block w-full border-slate-400 rounded-lg focus:border-slate-500 text-slate-500 focus:ring-slate-700"
+                    ></x-input>
+                </div>
+                
                 <div>
                     <label for="target_value" class="block mb-1 text-sm font-medium text-slate-700 dark:text-white">Target Value :</label>
                     <x-input 
                         name="target_value" 
-                        type="number" 
-                        min="0" 
+                        type="text" 
                         class="block w-full border-slate-400 rounded-lg focus:border-slate-500 text-slate-500 focus:ring-slate-700"
                     ></x-input>
                 </div>

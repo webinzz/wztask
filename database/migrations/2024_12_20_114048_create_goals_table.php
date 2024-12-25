@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('goals', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
             $table->string('target_value');
             $table->string('current_value')->default("belum");
             $table->float('current_persen')->default(0);
             $table->enum('timeline', ['day', 'week', 'month', 'year']);
-            $table->enum('status', ['Not Started', 'In Progress', 'Completed'])->default('Not Started');
+            $table->enum('status', ['notstart', 'inprogres', 'completed'])->default('notstart');
             $table->string('image');
             $table->timestamps();
         });

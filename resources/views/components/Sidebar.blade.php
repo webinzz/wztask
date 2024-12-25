@@ -1,4 +1,4 @@
-    <aside class="w-80  h-screen hidden lg:block  ">
+    <aside class="w-80  h-screen hidden md:block  ">
         <!-- Logo -->
         <div class="flex items-center ps-2.5 my-10 m-7">
             <img  src="{{ asset('assets/logo.png') }}" class="h-6 me-3 sm:h-9  rounded-md"  />
@@ -8,7 +8,7 @@
         <nav class="mt-4 text-white">
             <ul>
                 <li>
-                    <a href="{{ url("dashboard") }}"
+                    <a href="{{ url("/") }}"
                         class="text-lg  flex items-center p-3 px-10 hover:border-l-8 duration-100  transition-all">
                         <span class="material-icons me-3 text-[27px]">home</span>
                         Dashboard
@@ -29,10 +29,10 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="{{ url("myday") }}"
                         class="text-lg flex items-center p-3 px-10 hover:border-l-8 duration-100  transition-all">
                         <span class="material-icons me-3 text-[27px]">calendar_today</span>
-                        Time
+                        myday   
                     </a>
                 </li>
             </ul>
